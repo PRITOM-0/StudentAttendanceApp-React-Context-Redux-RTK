@@ -24,7 +24,7 @@ const StudentItem = (props) => {
     setEditClass(std.class);
   };
   const updatehandle = () => {
-    if (editName === "" || editClass === "") {
+    if (editName.trim() === "" || editClass.trim() === "") {
       alert("Enter Student Information");
       return;
     }

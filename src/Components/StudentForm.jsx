@@ -7,7 +7,7 @@ const StudentForm = (props) => {
 
   const submithandle = (e) => {
     e.preventDefault();
-    if (inputName === "" || inputClass === "") {
+    if (inputName.trim() === "" || inputClass.trim() === "") {
       alert("Enter Student Information");
       return;
     }
