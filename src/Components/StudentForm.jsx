@@ -49,10 +49,10 @@ const StudentForm = (props) => {
             }}
           >
             <option value=""> </option>
-            <option value="Class 10">10</option>
-            <option value="Class 11">11</option>
-            <option value="Class 12">12</option>
-            <option value="Class 13">13</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
           </select>
           <br />
           <br />

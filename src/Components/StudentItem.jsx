@@ -2,7 +2,6 @@ import { useState } from "react";
 
 const StudentItem = (props) => {
   const { std, setStudentList, studentList } = props;
-
   const [editName, setEditName] = useState("");
   const [editClass, setEditClass] = useState("");
 
@@ -24,8 +23,11 @@ const StudentItem = (props) => {
     setEditName(std.name);
     setEditClass(std.class);
   };
-
   const updatehandle = () => {
+    if (editName === "" || editClass === "") {
+      alert("Enter Student Information");
+      return;
+    }
     setStudentList([
       ...studentList.map((el) => {
         if (std.id == el.id) {
