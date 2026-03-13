@@ -12,6 +12,17 @@ const SearchStudent = (props) => {
   const [searchData, setSearchData] = useState(demoSearch);
 
 useEffect(() => {
+  // If all search fields are empty, show no results
+  const allEmpty =
+    searchData.name === "" &&
+    searchData.class === "" &&
+    searchData.status === "";
+
+  if (allEmpty) {
+    setSearchStudent([]);
+    return;
+  }
+
   const filtered = studentList.filter((el) => {
     const nameMatch =
       searchData.name === "" ||
@@ -35,6 +46,7 @@ useEffect(() => {
 
   setSearchStudent(filtered);
 }, [searchData, studentList]);
+
 
 
   const clearHandle = () => {
