@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import StudentItem from "./StudentItem";
 import StudentTableHead from "./StudentTableHead";
+import { useContext } from "react";
+import { studentContext } from "../context/StudentContext";
 
-const StudentList = (props) => {
-  const { studentList, setStudentList } = props;
+const StudentList = () => {
+  const { studentList, setStudentList } = useContext(studentContext);
   const [listMode, setListMode] = useState("All");
   let students = studentList;
   const listhandle = (m) => {
@@ -72,8 +74,6 @@ const StudentList = (props) => {
             <div key={std.id}>
               <StudentItem
                 std={std}
-                setStudentList={setStudentList}
-                studentList={studentList}
               />
             </div>
           ))}

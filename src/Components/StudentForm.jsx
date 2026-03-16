@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { classes } from "../assets/data";
-const StudentForm = (props) => {
-  const { studentList, setStudentList } = props;
+import {studentContext} from "../context/StudentContext";
+const StudentForm = () => {
+  const { studentList, setStudentList } = useContext(studentContext);
+  
   const [inputName, setInputName] = useState("");
   const [inputClass, setInputClass] = useState("");
 

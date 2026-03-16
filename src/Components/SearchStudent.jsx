@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import StudentItem from "./StudentItem";
 import { useEffect } from "react";
 import { classes } from "../assets/data";
 import StudentTableHead from "./StudentTableHead";
+import { studentContext } from "../context/StudentContext";
 const demoSearch = {
   name: "",
   class: "",
   status: "",
 };
-const SearchStudent = (props) => {
-  const { studentList, setStudentList } = props;
+const SearchStudent = () => {
+  const { studentList, setStudentList } = useContext(studentContext);
   const [SearchStudent, setSearchStudent] = useState([]);
   const [searchData, setSearchData] = useState(demoSearch);
 

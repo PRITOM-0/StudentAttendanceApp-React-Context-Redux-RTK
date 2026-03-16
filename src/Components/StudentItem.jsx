@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { classes } from "../assets/data";
+import { studentContext } from "../context/StudentContext";
 
 const StudentItem = (props) => {
-  const { std, setStudentList, studentList } = props;
+  const {setStudentList, studentList } = useContext(studentContext);
+  const { std} = props;
   const [editName, setEditName] = useState("");
   const [editClass, setEditClass] = useState("");
   const [studentEditBar, setStudentEditBar] = useState(false);
