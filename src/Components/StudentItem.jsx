@@ -91,7 +91,7 @@ const StudentItem = (props) => {
         className=" group flex flex-col justify-center"
         
       >
-        <div className={!std.editMode ?" mx-10 mb-1 text-center text-lg  py-2  flex justify-between px-10 border border-orange-700 rounded text-sm font-bold text-orange-500 hover:bg-orange-100":" mx-10 mb-1 text-center text-lg  py-2  flex justify-between px-10 border border-orange-700 rounded text-sm font-bold text-orange-500 bg-orange-600"} onClick={showEditBar}>
+        <div className={!std.editMode ?" mx-10 mb-1 text-center text-lg  py-2  flex justify-between px-10 border border-orange-700 rounded text-sm font-bold text-orange-500  hover:bg-orange-100":" mx-10 mb-1 text-center text-lg  py-2  flex justify-between px-10 border border-orange-700 rounded text-sm font-bold text-orange-500 bg-orange-600"} onClick={showEditBar}>
           <span className="w-25 text-start">
             {std.editMode == false && std.name}
             {std.editMode == true && (

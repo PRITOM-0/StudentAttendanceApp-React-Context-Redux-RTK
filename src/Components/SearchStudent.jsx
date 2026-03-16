@@ -56,13 +56,12 @@ const SearchStudent = (props) => {
 
   return (
     <>
-      <fieldset className="bg-orange-200 pb-5 m-5 text-center rounded-lg">
+      <fieldset className="bg-orange-200 pb-5 m-5 text-center rounded-lg ">
         <h2 className="text-center text-white  text-xl text-orange-500  py-2 rounded-tl-lg rounded-tr-lg mb-3 bg-orange-600">
           Search Student
         </h2>
         <div
-          className="flex flex-col gap-1 mt-2 mx-5 justify-cent
-er"
+          className="flex flex-col gap-1 mt-2 mx-5 justify-center"
         >
           <label
             className="uppercase text-start text-orange-500 text-sm mt-2 "
@@ -92,7 +91,10 @@ er"
               setSearchData({ ...searchData, class: e.target.value });
             }}
           >
-            <option value="" disabled> Select Class</option>
+            <option value="" disabled>
+              {" "}
+              Select Class
+            </option>
             {classes?.map((el) => (
               <option key={el} value={el}>
                 {el}
@@ -113,7 +115,10 @@ er"
               setSearchData({ ...searchData, status: e.target.value });
             }}
           >
-            <option value="" disabled> Select Attendance</option>
+            <option value="" disabled>
+              {" "}
+              Select Attendance
+            </option>
             <option value={undefined}>Undefine</option>
             <option value={true}>Present</option>
             <option value={false}>Absent</option>
@@ -126,9 +131,9 @@ er"
             Clear
           </button>
 
-          {SearchStudent.length !==0 && (
+          {SearchStudent.length !== 0 && (
             <div>
-              <StudentTableHead/>
+              <StudentTableHead />
               {SearchStudent?.map((std) => (
                 <div key={std.id}>
                   <StudentItem
