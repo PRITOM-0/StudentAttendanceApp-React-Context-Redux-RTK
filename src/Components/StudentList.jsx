@@ -21,8 +21,8 @@ const StudentList = (props) => {
 
   return (
     <>
-      <fieldset className="bg-orange-200 pb-5 m-5 text-center rounded-lg">
-        <h2 className="text-center text-white  text-xl text-orange-500 py-2 rounded-tl-lg rounded-tr-lg mb-3 bg-orange-600">
+      <fieldset className="w-[95%] md:w-[90] lg:w-[80%] mx-auto bg-orange-200 pb-5 text-center rounded-lg">
+        <h2 className=" text-center text-white  text-xl text-orange-500 py-2 rounded-tl-lg rounded-tr-lg mb-3 bg-orange-600">
           {listMode == "All" && "All Student"}
           {listMode == "P" && "Present Student"}
           {listMode == "A" && "Absent Student"}
@@ -30,28 +30,32 @@ const StudentList = (props) => {
         </h2>
 
         <div className=" flex flex-col px-10 gap-2 justify-between ">
-          <button className="border rounded py-1 bg-orange-100 border-orange-500 text-orange-500 font-bold hover:text-white hover:bg-orange-600 hover:scale-98  transition duration-400 ease-in-out mx-2"
+          <button
+            className="border rounded py-1 bg-orange-100 border-orange-500 text-orange-500 font-bold hover:text-white hover:bg-orange-600 hover:scale-98  transition duration-400 ease-in-out mx-2"
             onClick={() => {
               listhandle("All");
             }}
           >
             All Student
           </button>
-          <button className="border rounded py-1 bg-orange-100 border-orange-500 text-orange-500 font-bold hover:text-white hover:bg-orange-600 hover:scale-98 transition duration-400 ease-in-out mx-2"
+          <button
+            className="border rounded py-1 bg-orange-100 border-orange-500 text-orange-500 font-bold hover:text-white hover:bg-orange-600 hover:scale-98 transition duration-400 ease-in-out mx-2"
             onClick={() => {
               listhandle("P");
             }}
           >
             Present Student
           </button>
-          <button className="border rounded py-1 bg-orange-100 border-orange-500 text-orange-500 font-bold hover:text-white hover:bg-orange-600 hover:scale-98 transition duration-400 ease-in-out mx-2"
+          <button
+            className="border rounded py-1 bg-orange-100 border-orange-500 text-orange-500 font-bold hover:text-white hover:bg-orange-600 hover:scale-98 transition duration-400 ease-in-out mx-2"
             onClick={() => {
               listhandle("A");
             }}
           >
             Absent Student
           </button>
-          <button className="border rounded py-1 bg-orange-100 border-orange-500 text-orange-500 font-bold hover:text-white hover:bg-orange-600 hover:scale-98 transition duration-400 ease-in-out mx-2"
+          <button
+            className="border rounded py-1 bg-orange-100 border-orange-500 text-orange-500 font-bold hover:text-white hover:bg-orange-600 hover:scale-98 transition duration-400 ease-in-out mx-2"
             onClick={() => {
               listhandle("U");
             }}
@@ -59,16 +63,22 @@ const StudentList = (props) => {
             Undefine Student
           </button>
         </div>
-        <StudentTableHead/>
-        {students?.map((std) => (
-          <div key={std.id}>
-            <StudentItem
-              std={std}
-              setStudentList={setStudentList}
-              studentList={studentList}
-            />
+        <div className="">
+          <div className="">
+            <StudentTableHead />
           </div>
-        ))}
+          <div>
+            {students?.map((std) => (
+            <div key={std.id}>
+              <StudentItem
+                std={std}
+                setStudentList={setStudentList}
+                studentList={studentList}
+              />
+            </div>
+          ))}
+          </div>
+        </div>
       </fieldset>
     </>
   );
