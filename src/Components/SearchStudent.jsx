@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import StudentItem from "./StudentItem";
 import { useEffect } from "react";
 import { classes } from "../assets/data";
 import StudentTableHead from "./StudentTableHead";
+import { studentContext } from "../context/StudentContext";
 const demoSearch = {
   name: "",
   class: "",
   status: "",
 };
-const SearchStudent = (props) => {
-  const { studentList, setStudentList } = props;
+const SearchStudent = () => {
+  const { state, dispatch } = useContext(studentContext);
   const [SearchStudent, setSearchStudent] = useState([]);
   const [searchData, setSearchData] = useState(demoSearch);
 
@@ -25,7 +26,7 @@ const SearchStudent = (props) => {
       return;
     }
 
-    const filtered = studentList.filter((el) => {
+    const filtered = state.studentList.filter((el) => {
       const nameMatch =
         searchData.name === "" ||
         el.name.toLowerCase().includes(searchData.name.toLowerCase());
@@ -47,7 +48,7 @@ const SearchStudent = (props) => {
     });
 
     setSearchStudent(filtered);
-  }, [searchData, studentList]);
+  }, [searchData, state.studentList]);
 
   const clearHandle = () => {
     setSearchStudent([]);
@@ -138,8 +139,7 @@ const SearchStudent = (props) => {
                 <div key={std.id}>
                   <StudentItem
                     std={std}
-                    setStudentList={setStudentList}
-                    studentList={studentList}
+                    
                   />
                 </div>
               ))}
