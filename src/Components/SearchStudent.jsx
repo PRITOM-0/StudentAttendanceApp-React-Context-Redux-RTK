@@ -10,7 +10,7 @@ const demoSearch = {
   status: "",
 };
 const SearchStudent = () => {
-  const { studentList, setStudentList } = useContext(studentContext);
+  const { state, dispatch } = useContext(studentContext);
   const [SearchStudent, setSearchStudent] = useState([]);
   const [searchData, setSearchData] = useState(demoSearch);
 
@@ -26,7 +26,7 @@ const SearchStudent = () => {
       return;
     }
 
-    const filtered = studentList.filter((el) => {
+    const filtered = state.studentList.filter((el) => {
       const nameMatch =
         searchData.name === "" ||
         el.name.toLowerCase().includes(searchData.name.toLowerCase());
@@ -48,7 +48,7 @@ const SearchStudent = () => {
     });
 
     setSearchStudent(filtered);
-  }, [searchData, studentList]);
+  }, [searchData, state.studentList]);
 
   const clearHandle = () => {
     setSearchStudent([]);
@@ -139,8 +139,7 @@ const SearchStudent = () => {
                 <div key={std.id}>
                   <StudentItem
                     std={std}
-                    setStudentList={setStudentList}
-                    studentList={studentList}
+                    
                   />
                 </div>
               ))}

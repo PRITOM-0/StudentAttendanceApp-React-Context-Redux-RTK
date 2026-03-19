@@ -3,8 +3,8 @@ import { classes } from "../assets/data";
 import { studentContext } from "../context/StudentContext";
 
 const StudentItem = (props) => {
-  const {setStudentList, studentList } = useContext(studentContext);
-  const { std} = props;
+  const { dispatch } = useContext(studentContext);
+  const { std } = props;
   const [editName, setEditName] = useState("");
   const [editClass, setEditClass] = useState("");
   const [studentEditBar, setStudentEditBar] = useState(false);
@@ -18,87 +18,49 @@ const StudentItem = (props) => {
   };
 
   const deletehandle = () => {
-    setStudentList([...studentList.filter((el) => el.id !== std.id)]);
+    dispatch({ type: "DELETE_STUDENT", payload: std.id });
     showEditBar();
   };
   const edithandle = () => {
-    setStudentList([
-      ...studentList.map((el) => {
-        if (std.id == el.id) {
-          return {
-            ...el,
-            editMode: true,
-          };
-        }
-        return el;
-      }),
-    ]);
+    dispatch({ type: "EDIT_STUDENT", payload: { student: std } });
     setEditName(std.name);
     setEditClass(std.class);
   };
   const updatehandle = () => {
-    if (editName.trim() === "" || editClass.trim() === "") {
-      alert("Enter Student Information");
-      return;
-    }
-    setStudentList([
-      ...studentList.map((el) => {
-        if (std.id == el.id) {
-          return {
-            ...el,
-            name: editName,
-            class: editClass,
-            editMode: false,
-          };
-        }
-        return el;
-      }),
-    ]);
+    dispatch({
+      type: "UPDATE_STUDENT",
+      payload: { std: std, name: editName, class: editClass },
+    });
     setEditName("");
     setEditClass("");
-    showEditBar()
+    showEditBar();
   };
   const presenthandle = () => {
-    setStudentList([
-      ...studentList.map((el) => {
-        if (std.id == el.id) {
-          return {
-            ...el,
-            status: true,
-          };
-        }
-        return el;
-      }),
-    ]);
+    dispatch({ type: "MAKE_PRESENT", payload: { student: std } });
+
     showEditBar();
   };
   const absenthandle = () => {
-    setStudentList([
-      ...studentList.map((el) => {
-        if (std.id == el.id) {
-          return {
-            ...el,
-            status: false,
-          };
-        }
-        return el;
-      }),
-    ]);
+    dispatch({ type: "MAKE_ABSENT",  payload: { student: std } });
     showEditBar();
   };
 
   return (
     <>
-      <div
-        className=" group flex flex-col justify-center"
-        
-      >
-        <div className={!std.editMode ?"mb-1 text-center text-lg  py-2  flex justify-between px-10 border border-orange-700 rounded text-sm font-bold text-orange-500  hover:bg-orange-100":" mb-1 text-center text-lg  py-2  flex justify-between px-10 border border-orange-700 rounded text-sm font-bold text-orange-500 bg-orange-600"} onClick={showEditBar}>
+      <div className=" group flex flex-col justify-center">
+        <div
+          className={
+            !std.editMode
+              ? "mb-1 text-center text-lg  py-2  flex justify-between px-10 border border-orange-700 rounded text-sm font-bold text-orange-500  hover:bg-orange-100"
+              : " mb-1 text-center text-lg  py-2  flex justify-between px-10 border border-orange-700 rounded text-sm font-bold text-orange-500 bg-orange-600"
+          }
+          onClick={showEditBar}
+        >
           <span className="w-25 text-start">
             {std.editMode == false && std.name}
             {std.editMode == true && (
               <input
-              className="w-25  bg-orange-100 px-2 py-1 rounded border border-orange-500"
+                className="w-25  bg-orange-100 px-2 py-1 rounded border border-orange-500"
                 type="text"
                 name="stdname"
                 placeholder="Enter name"
@@ -113,7 +75,7 @@ const StudentItem = (props) => {
             {std.editMode == false && std.class}
             {std.editMode == true && (
               <select
-              className="bg-orange-100 px-2 py-1 rounded border border-orange-500"
+                className="bg-orange-100 px-2 py-1 rounded border border-orange-500"
                 name="stdclass"
                 value={editClass}
                 onChange={(e) => {
@@ -128,13 +90,23 @@ const StudentItem = (props) => {
               </select>
             )}
           </span>
-          <span className={std.editMode?"w-25 text-white text-end pt-1":"w-25 text-end"}>
+          <span
+            className={
+              std.editMode ? "w-25 text-white text-end pt-1" : "w-25 text-end"
+            }
+          >
             {std.status == undefined && "Undefined"}
             {std.status == true && "Present"}
             {std.status == false && "Absent"}
           </span>
         </div>
-        <div className={studentEditBar ? "text-white-500 mx-auto mb-2 h-full flex items-center px-6 pb-1":" hidden mb-2"}>
+        <div
+          className={
+            studentEditBar
+              ? "text-white-500 mx-auto mb-2 h-full flex items-center px-6 pb-1"
+              : " hidden mb-2"
+          }
+        >
           <span className="w-full text-center text-white font-bold border border-indigo-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-indigo-500 hover:bg-indigo-700 text-sm pb-1 transition duration-300 ease-in-out">
             {std.editMode == false && (
               <input type="button" value="Edit" onClick={edithandle} />

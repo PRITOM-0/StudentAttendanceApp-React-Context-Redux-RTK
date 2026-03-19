@@ -5,20 +5,20 @@ import { useContext } from "react";
 import { studentContext } from "../context/StudentContext";
 
 const StudentList = () => {
-  const { studentList, setStudentList } = useContext(studentContext);
+  const { state } = useContext(studentContext);
   const [listMode, setListMode] = useState("All");
-  let students = studentList;
+  let students = state.studentList;
   const listhandle = (m) => {
     setListMode(m);
   };
   if (listMode == "All") {
-    students = studentList;
+    students = state.studentList;
   } else if (listMode == "P") {
-    students = [...studentList.filter((el) => el.status == true)];
+    students = [...state.studentList.filter((el) => el.status == true)];
   } else if (listMode == "A") {
-    students = [...studentList.filter((el) => el.status == false)];
+    students = [...state.studentList.filter((el) => el.status == false)];
   } else if (listMode == "U") {
-    students = [...studentList.filter((el) => el.status == undefined)];
+    students = [...state.studentList.filter((el) => el.status == undefined)];
   }
 
   return (
