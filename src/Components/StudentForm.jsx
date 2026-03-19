@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import { classes } from "../assets/data";
-import { studentContext } from "../context/StudentContext";
+import { useDispatch } from "react-redux";
 const StudentForm = () => {
-  const { dispatch } = useContext(studentContext);
+  const dispatch = useDispatch();
   const [inputName, setInputName] = useState("");
   const [inputClass, setInputClass] = useState("");
 
@@ -13,7 +13,7 @@ const StudentForm = () => {
       return;
     }
     dispatch({
-      type: "ADD_STUDENT",
+      type: "StudentState/ADD_STUDENT",
       payload: { name: inputName, class: inputClass },
     });
     setInputClass("");

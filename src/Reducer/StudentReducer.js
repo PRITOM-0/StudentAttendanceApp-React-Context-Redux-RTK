@@ -1,6 +1,10 @@
-export const studentReducer = (state, action) => {
+import { demoList } from "../assets/data";
+
+export const studentReducer = (state = demoList, action) => {
+  console.log(state)
   switch (action.type) {
-    case "ADD_STUDENT": {
+    case "StudentState/ADD_STUDENT": {
+      console.log("hoop")
       const newStudent = {
         id: Date.now() + "",
         name: action.payload.name,
@@ -8,36 +12,25 @@ export const studentReducer = (state, action) => {
         status: undefined,
         editMode: false,
       };
-      return {
-        ...state,
-        studentList: [...state.studentList, newStudent],
-      };
+      return [...state, newStudent];
     }
-    case "DELETE_STUDENT": {
-      return {
-        ...state,
-        studentList: [
-          ...state.studentList.filter((el) => el.id !== action.payload),
-        ],
-      };
+    case "StudentState/DELETE_STUDENT": {
+      return [...state.filter((el) => el.id !== action.payload)];
     }
-    case "EDIT_STUDENT": {
-      return {
-        ...state,
-        studentList: [
-          ...state.studentList.map((el) => {
-            if (action.payload.student.id == el.id) {
-              return {
-                ...el,
-                editMode: true,
-              };
-            }
-            return el;
-          }),
-        ],
-      };
+    case "StudentState/EDIT_STUDENT": {
+      return [
+        ...state.map((el) => {
+          if (action.payload.student.id == el.id) {
+            return {
+              ...el,
+              editMode: true,
+            };
+          }
+          return el;
+        }),
+      ];
     }
-    case "UPDATE_STUDENT": {
+    case "StudentState/UPDATE_STUDENT": {
       if (
         action.payload.name.trim() === "" ||
         action.payload.class.trim() === ""
@@ -45,60 +38,48 @@ export const studentReducer = (state, action) => {
         alert("Enter Student Information");
         return state;
       }
-      return {
-        ...state,
-        studentList: [
-          ...state.studentList.map((el) => {
-            if (action.payload.std.id == el.id) {
-              return {
-                ...el,
-                name: action.payload.name,
-                class: action.payload.class,
-                editMode: false,
-              };
-            }
-            return el;
-          }),
-        ],
-      };
+      return [
+        ...state.map((el) => {
+          if (action.payload.std.id == el.id) {
+            return {
+              ...el,
+              name: action.payload.name,
+              class: action.payload.class,
+              editMode: false,
+            };
+          }
+          return el;
+        }),
+      ];
     }
-    case "MAKE_PRESENT": {
-      return {
-        ...state,
-        studentList: [
-          ...state.studentList.map((el) => {
-            if (action.payload.student.id == el.id) {
-              return {
-                ...el,
-                status: true,
-              };
-            }
-            return el;
-          }),
-        ],
-      };
+    case "StudentState/MAKE_PRESENT": {
+      return [
+        ...state.map((el) => {
+          if (action.payload.student.id == el.id) {
+            return {
+              ...el,
+              status: true,
+            };
+          }
+          return el;
+        }),
+      ];
     }
-    case "MAKE_ABSENT": {
-      return {
-        ...state,
-        studentList: [
-          ...state.studentList.map((el) => {
-            if (action.payload.student.id == el.id) {
-              return {
-                ...el,
-                status: false,
-              };
-            }
-            return el;
-          }),
-        ],
-      };
+    case "StudentState/MAKE_ABSENT": {
+      return [
+        ...state.map((el) => {
+          if (action.payload.student.id == el.id) {
+            return {
+              ...el,
+              status: false,
+            };
+          }
+          return el;
+        }),
+      ];
     }
-    case "": {
-    }
-    case "": {
-    }
-    case "": {
+    default: {
+      return state;
     }
   }
 };

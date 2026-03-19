@@ -3,14 +3,15 @@ import StudentItem from "./StudentItem";
 import { useEffect } from "react";
 import { classes } from "../assets/data";
 import StudentTableHead from "./StudentTableHead";
-import { studentContext } from "../context/StudentContext";
+import { useDispatch, useSelector } from "react-redux";
 const demoSearch = {
   name: "",
   class: "",
   status: "",
 };
 const SearchStudent = () => {
-  const { state, dispatch } = useContext(studentContext);
+  const state = useSelector((state) => state.studentState);
+  const dispatch = useDispatch();
   const [SearchStudent, setSearchStudent] = useState([]);
   const [searchData, setSearchData] = useState(demoSearch);
 
@@ -26,7 +27,7 @@ const SearchStudent = () => {
       return;
     }
 
-    const filtered = state.studentList.filter((el) => {
+    const filtered = state.filter((el) => {
       const nameMatch =
         searchData.name === "" ||
         el.name.toLowerCase().includes(searchData.name.toLowerCase());
@@ -48,7 +49,7 @@ const SearchStudent = () => {
     });
 
     setSearchStudent(filtered);
-  }, [searchData, state.studentList]);
+  }, [searchData, state]);
 
   const clearHandle = () => {
     setSearchStudent([]);
@@ -61,9 +62,7 @@ const SearchStudent = () => {
         <h2 className="text-center text-white  text-xl text-orange-500  py-2 rounded-tl-lg rounded-tr-lg mb-3 bg-orange-600">
           Search Student
         </h2>
-        <div
-          className="flex flex-col gap-1 mt-2 mx-5 justify-center"
-        >
+        <div className="flex flex-col gap-1 mt-2 mx-5 justify-center">
           <label
             className="uppercase text-start text-orange-500 text-sm mt-2 "
             htmlFor="stdname"
@@ -137,10 +136,7 @@ const SearchStudent = () => {
               <StudentTableHead />
               {SearchStudent?.map((std) => (
                 <div key={std.id}>
-                  <StudentItem
-                    std={std}
-                    
-                  />
+                  <StudentItem std={std} />
                 </div>
               ))}
             </div>

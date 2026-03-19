@@ -1,24 +1,25 @@
 import React, { useState } from "react";
 import StudentItem from "./StudentItem";
 import StudentTableHead from "./StudentTableHead";
-import { useContext } from "react";
-import { studentContext } from "../context/StudentContext";
+import { useSelector } from "react-redux";
 
 const StudentList = () => {
-  const { state } = useContext(studentContext);
+  const state = useSelector((state)=>state.studentState);
+  console.log(state);
+  
   const [listMode, setListMode] = useState("All");
-  let students = state.studentList;
+  let students = state ;
   const listhandle = (m) => {
     setListMode(m);
   };
   if (listMode == "All") {
-    students = state.studentList;
+    students = state ;
   } else if (listMode == "P") {
-    students = [...state.studentList.filter((el) => el.status == true)];
+    students = [...state.filter((el) => el.status == true)];
   } else if (listMode == "A") {
-    students = [...state.studentList.filter((el) => el.status == false)];
+    students = [...state.filter((el) => el.status == false)];
   } else if (listMode == "U") {
-    students = [...state.studentList.filter((el) => el.status == undefined)];
+    students = [...state.filter((el) => el.status == undefined)];
   }
 
   return (
