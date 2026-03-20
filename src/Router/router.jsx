@@ -1,6 +1,6 @@
 // npm i react-router-dom
 import { createBrowserRouter } from "react-router-dom";
-import RootPage from "../pages/rootPage";
+import RootPage from "../pages/RootPage";
 import AllStudentPage from "../pages/AllStudentPage";
 import AddStudentPage from "../pages/AddStudentPage";
 import SearchStudentPage from "../pages/SearchStudentPage";
