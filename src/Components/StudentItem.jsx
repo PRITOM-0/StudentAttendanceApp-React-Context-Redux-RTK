@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import { classes } from "../assets/data";
-import { studentContext } from "../context/StudentContext";
+import { useDispatch } from "react-redux";
 
 const StudentItem = (props) => {
-  const { dispatch } = useContext(studentContext);
+  const  dispatch = useDispatch();
   const { std } = props;
   const [editName, setEditName] = useState("");
   const [editClass, setEditClass] = useState("");
@@ -18,17 +18,17 @@ const StudentItem = (props) => {
   };
 
   const deletehandle = () => {
-    dispatch({ type: "DELETE_STUDENT", payload: std.id });
+    dispatch({ type: "StudentState/DELETE_STUDENT", payload: std.id });
     showEditBar();
   };
   const edithandle = () => {
-    dispatch({ type: "EDIT_STUDENT", payload: { student: std } });
+    dispatch({ type: "StudentState/EDIT_STUDENT", payload: { student: std } });
     setEditName(std.name);
     setEditClass(std.class);
   };
   const updatehandle = () => {
     dispatch({
-      type: "UPDATE_STUDENT",
+      type: "StudentState/UPDATE_STUDENT",
       payload: { std: std, name: editName, class: editClass },
     });
     setEditName("");
@@ -36,18 +36,19 @@ const StudentItem = (props) => {
     showEditBar();
   };
   const presenthandle = () => {
-    dispatch({ type: "MAKE_PRESENT", payload: { student: std } });
+    dispatch({ type: "StudentState/MAKE_PRESENT", payload: { student: std } });
 
     showEditBar();
   };
   const absenthandle = () => {
-    dispatch({ type: "MAKE_ABSENT",  payload: { student: std } });
+    dispatch({ type: "StudentState/MAKE_ABSENT",  payload: { student: std } });
     showEditBar();
   };
 
+
   return (
     <>
-      <div className=" group flex flex-col justify-center">
+      <div className=" w-[90%] mx-auto group flex flex-col justify-center ">
         <div
           className={
             !std.editMode

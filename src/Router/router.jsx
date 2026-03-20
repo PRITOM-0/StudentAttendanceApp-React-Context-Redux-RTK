@@ -1,0 +1,28 @@
+// npm i react-router-dom
+import { createBrowserRouter } from "react-router-dom";
+import RootPage from "../pages/rootPage";
+import AllStudentPage from "../pages/AllStudentPage";
+import AddStudentPage from "../pages/AddStudentPage";
+import SearchStudentPage from "../pages/SearchStudentPage";
+
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <RootPage />,
+    children: [
+      { index: true, element:<div></div> },
+      {
+        path: "/addStudent",
+        element: <AddStudentPage />,
+      },
+      {
+        path: "/allStudent",
+        element: <AllStudentPage/>,
+      },
+      {
+        path: "/searchStudent",
+        element: <SearchStudentPage />,
+      },
+    ],
+  },
+]);

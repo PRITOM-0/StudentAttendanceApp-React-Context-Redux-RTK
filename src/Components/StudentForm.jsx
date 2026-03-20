@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import { classes } from "../assets/data";
-import { studentContext } from "../context/StudentContext";
+import { useDispatch } from "react-redux";
 const StudentForm = () => {
-  const { dispatch } = useContext(studentContext);
+  const dispatch = useDispatch();
   const [inputName, setInputName] = useState("");
   const [inputClass, setInputClass] = useState("");
 
@@ -13,7 +13,7 @@ const StudentForm = () => {
       return;
     }
     dispatch({
-      type: "ADD_STUDENT",
+      type: "StudentState/ADD_STUDENT",
       payload: { name: inputName, class: inputClass },
     });
     setInputClass("");
@@ -23,7 +23,7 @@ const StudentForm = () => {
   return (
     <>
       <form
-        className="w-[95%] mx-auto my-5 bg-orange-200 pb-5 text-center rounded-lg"
+        className="w-[80%] mx-auto my-5 bg-orange-200 pb-5 text-center rounded-lg"
         onSubmit={(e) => submithandle(e)}
       >
         <h2 className="text-center text-white  text-xl text-orange-500  py-2 rounded-tl-lg rounded-tr-lg mb-3 bg-orange-600">
