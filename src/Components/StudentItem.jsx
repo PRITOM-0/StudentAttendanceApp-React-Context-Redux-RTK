@@ -45,9 +45,10 @@ const StudentItem = (props) => {
     showEditBar();
   };
 
+
   return (
     <>
-      <div className=" group flex flex-col justify-center">
+      <div className=" w-[90%] mx-auto group flex flex-col justify-center ">
         <div
           className={
             !std.editMode

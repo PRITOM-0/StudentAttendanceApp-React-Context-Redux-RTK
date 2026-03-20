@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 const StudentList = () => {
   const state = useSelector((state)=>state.studentState);
-  console.log(state);
+ 
   
   const [listMode, setListMode] = useState("All");
   let students = state ;
@@ -24,7 +24,7 @@ const StudentList = () => {
 
   return (
     <>
-      <fieldset className="w-[95%] md:w-[90] lg:w-[80%] mx-auto bg-orange-200 pb-5 text-center rounded-lg">
+      <fieldset className="w-[95%] md:w-[90] lg:w-[80%] mx-auto bg-orange-200 pb-5 text-center rounded-lg mb-5 ">
         <h2 className=" text-center text-white  text-xl text-orange-500 py-2 rounded-tl-lg rounded-tr-lg mb-3 bg-orange-600">
           {listMode == "All" && "All Student"}
           {listMode == "P" && "Present Student"}
@@ -70,7 +70,7 @@ const StudentList = () => {
           <div className="">
             <StudentTableHead />
           </div>
-          <div>
+          <div className="h-60 overflow-y-auto scroll-container">
             {students?.map((std) => (
             <div key={std.id}>
               <StudentItem

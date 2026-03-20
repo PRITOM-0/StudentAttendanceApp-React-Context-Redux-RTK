@@ -1,10 +1,10 @@
 import { demoList } from "../assets/data";
 
 export const studentReducer = (state = demoList, action) => {
-  console.log(state)
+  
   switch (action.type) {
     case "StudentState/ADD_STUDENT": {
-      console.log("hoop")
+       
       const newStudent = {
         id: Date.now() + "",
         name: action.payload.name,
