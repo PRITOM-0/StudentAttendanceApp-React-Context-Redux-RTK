@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { classes } from "../assets/data";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router";
 
 const StudentItem = (props) => {
   const  dispatch = useDispatch();
@@ -108,6 +109,9 @@ const StudentItem = (props) => {
               : " hidden mb-2"
           }
         >
+          <Link className="w-full text-center text-white font-bold border border-rose-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-rose-500 hover:bg-rose-700 text-sm pb-1 transition duration-300 ease-in-out" to={`/${std.id}`}>
+            <input type="button" value="Details"/>
+          </Link>
           <span className="w-full text-center text-white font-bold border border-indigo-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-indigo-500 hover:bg-indigo-700 text-sm pb-1 transition duration-300 ease-in-out">
             {std.editMode == false && (
               <input type="button" value="Edit" onClick={edithandle} />

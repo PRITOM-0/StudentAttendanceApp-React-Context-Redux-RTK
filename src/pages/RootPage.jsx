@@ -4,7 +4,7 @@ import { Outlet } from "react-router";
 const RootPage = () => {
   return (
     <>
-      <div className=" md:w-3/4 lg:w-2/3 mx-auto py-5 border border-orange-500 rounded-lg shadow my-5 bg-orange-100">
+      <div className="sm:w-[90%] md:w-3/4 lg:w-2/3 mx-auto py-5 border border-orange-500 rounded-lg shadow my-5 bg-orange-100">
         <h1 className="text-center text-2xl font-bold text-orange-500">
           Student Attendance App
         </h1>
