@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { classes } from "../assets/data";
 import { useDispatch } from "react-redux";
+import { addStudent } from "../Features/StudentAttendance/studentSlice";
 const StudentForm = () => {
   const dispatch = useDispatch();
   const [inputName, setInputName] = useState("");
@@ -12,10 +13,7 @@ const StudentForm = () => {
       alert("Enter Student Information");
       return;
     }
-    dispatch({
-      type: "StudentState/ADD_STUDENT",
-      payload: { name: inputName, class: inputClass },
-    });
+    dispatch(addStudent({ name: inputName, class: inputClass }));
     setInputClass("");
     setInputName("");
   };

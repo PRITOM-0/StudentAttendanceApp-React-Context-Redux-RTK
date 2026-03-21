@@ -4,16 +4,14 @@ import StudentTableHead from "./StudentTableHead";
 import { useSelector } from "react-redux";
 
 const StudentList = () => {
-  const state = useSelector((state)=>state.studentState);
- 
-  
+  const state = useSelector((state) => state.student);
   const [listMode, setListMode] = useState("All");
-  let students = state ;
+  let students = state;
   const listhandle = (m) => {
     setListMode(m);
   };
   if (listMode == "All") {
-    students = state ;
+    students = state;
   } else if (listMode == "P") {
     students = [...state.filter((el) => el.status == true)];
   } else if (listMode == "A") {
@@ -72,12 +70,10 @@ const StudentList = () => {
           </div>
           <div className="h-60 overflow-y-auto scroll-container">
             {students?.map((std) => (
-            <div key={std.id}>
-              <StudentItem
-                std={std}
-              />
-            </div>
-          ))}
+              <div key={std.id}>
+                <StudentItem std={std} />
+              </div>
+            ))}
           </div>
         </div>
       </fieldset>
