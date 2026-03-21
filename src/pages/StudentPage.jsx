@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 const StudentPage = () => {
   const { stdId } = useParams();
-  const state = useSelector((state) => state.studentState);
+  const state = useSelector((state) => state.student);
   const student = [...state.filter((el) => el.id == stdId)][0];
  
 

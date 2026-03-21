@@ -10,8 +10,7 @@ const demoSearch = {
   status: "",
 };
 const SearchStudent = () => {
-  const state = useSelector((state) => state.studentState);
-  const dispatch = useDispatch();
+  const state = useSelector((state) => state.student);
   const [SearchStudent, setSearchStudent] = useState([]);
   const [searchData, setSearchData] = useState(demoSearch);
 

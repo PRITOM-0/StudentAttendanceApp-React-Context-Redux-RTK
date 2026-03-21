@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { classes } from "../assets/data";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router";
+import { absentStudent, deleteStudent, editStudent, presentStudent, updateStudent } from "../Features/StudentAttendance/studentSlice";
 
 const StudentItem = (props) => {
   const  dispatch = useDispatch();
@@ -19,30 +20,26 @@ const StudentItem = (props) => {
   };
 
   const deletehandle = () => {
-    dispatch({ type: "StudentState/DELETE_STUDENT", payload: std.id });
+    dispatch(deleteStudent(std.id));
     showEditBar();
   };
   const edithandle = () => {
-    dispatch({ type: "StudentState/EDIT_STUDENT", payload: { student: std } });
+    dispatch(editStudent(std));
     setEditName(std.name);
     setEditClass(std.class);
   };
   const updatehandle = () => {
-    dispatch({
-      type: "StudentState/UPDATE_STUDENT",
-      payload: { std: std, name: editName, class: editClass },
-    });
+    dispatch(updateStudent({ std: std, name: editName, class: editClass }));
     setEditName("");
     setEditClass("");
     showEditBar();
   };
   const presenthandle = () => {
-    dispatch({ type: "StudentState/MAKE_PRESENT", payload: { student: std } });
-
+    dispatch(presentStudent(std));
     showEditBar();
   };
   const absenthandle = () => {
-    dispatch({ type: "StudentState/MAKE_ABSENT",  payload: { student: std } });
+    dispatch(absentStudent(std));
     showEditBar();
   };
 
@@ -109,7 +106,7 @@ const StudentItem = (props) => {
               : " hidden mb-2"
           }
         >
-          <Link className="w-full text-center text-white font-bold border border-rose-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-rose-500 hover:bg-rose-700 text-sm pb-1 transition duration-300 ease-in-out" to={`/${std.id}`}>
+          <Link className="w-full text-center text-white font-bold border border-rose-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-yellow-500 hover:bg-rose-700 text-sm pb-1 transition duration-300 ease-in-out" to={`/${std.id}`}>
             <input type="button" value="Details"/>
           </Link>
           <span className="w-full text-center text-white font-bold border border-indigo-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-indigo-500 hover:bg-indigo-700 text-sm pb-1 transition duration-300 ease-in-out">
