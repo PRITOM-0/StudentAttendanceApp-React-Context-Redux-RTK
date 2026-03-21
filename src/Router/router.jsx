@@ -4,6 +4,7 @@ import RootPage from "../pages/RootPage";
 import AllStudentPage from "../pages/AllStudentPage";
 import AddStudentPage from "../pages/AddStudentPage";
 import SearchStudentPage from "../pages/SearchStudentPage";
+import StudentPage from "../pages/StudentPage";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
       {
         path: "/searchStudent",
         element: <SearchStudentPage />,
+      },
+      {
+        path: "/:stdId",
+        element: <StudentPage />,
       },
     ],
   },
