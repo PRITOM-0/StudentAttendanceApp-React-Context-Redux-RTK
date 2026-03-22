@@ -1,0 +1,19 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "students": [
+    {
+      "id": "A2abSHtN9fw",
+      "name": "Pritom Saha",
+      "class": "12",
+      "status": "none",
+      "editMode": false
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

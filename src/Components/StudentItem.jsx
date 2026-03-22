@@ -2,10 +2,16 @@ import { useContext, useState } from "react";
 import { classes } from "../assets/data";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router";
-import { absentStudent, deleteStudent, editStudent, presentStudent, updateStudent } from "../Features/StudentAttendance/studentSlice";
+import {
+  absentStudents,
+  deleteStudents,
+  editStudent,
+  presentStudents,
+  updateStudents,
+} from "../Features/StudentAttendance/studentSlice";
 
 const StudentItem = (props) => {
-  const  dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { std } = props;
   const [editName, setEditName] = useState("");
   const [editClass, setEditClass] = useState("");
@@ -20,7 +26,7 @@ const StudentItem = (props) => {
   };
 
   const deletehandle = () => {
-    dispatch(deleteStudent(std.id));
+    dispatch(deleteStudents(std.id));
     showEditBar();
   };
   const edithandle = () => {
@@ -29,20 +35,41 @@ const StudentItem = (props) => {
     setEditClass(std.class);
   };
   const updatehandle = () => {
-    dispatch(updateStudent({ std: std, name: editName, class: editClass }));
+    if (editName.trim() === "" || editClass.trim() === "") {
+      alert("Enter Student Information");
+      return;
+    }
+    const rest = {
+      name: editName,
+      class: editClass,
+      status: std.status,
+      editMode: false,
+    };
+    dispatch(updateStudents({id: std.id, student: rest}));
     setEditName("");
     setEditClass("");
     showEditBar();
   };
   const presenthandle = () => {
-    dispatch(presentStudent(std));
+    const rest = {
+      name: std.name,
+      class: std.class,
+      status: "present",
+      editMode: std.editMode,
+    };
+    dispatch(presentStudents({id: std.id, student: rest}));
     showEditBar();
   };
   const absenthandle = () => {
-    dispatch(absentStudent(std));
+    const rest = {
+      name: std.name,
+      class: std.class,
+      status: "absent",
+      editMode: std.editMode,
+    };
+    dispatch(absentStudents({id: std.id, student: rest}));
     showEditBar();
   };
-
 
   return (
     <>
@@ -94,9 +121,9 @@ const StudentItem = (props) => {
               std.editMode ? "w-25 text-white text-end pt-1" : "w-25 text-end"
             }
           >
-            {std.status == undefined && "Undefined"}
-            {std.status == true && "Present"}
-            {std.status == false && "Absent"}
+            {std.status == "none" && "None"}
+            {std.status == "present" && "Present"}
+            {std.status == "absent" && "Absent"}
           </span>
         </div>
         <div
@@ -106,8 +133,11 @@ const StudentItem = (props) => {
               : " hidden mb-2"
           }
         >
-          <Link className="w-full text-center text-white font-bold border border-rose-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-yellow-500 hover:bg-rose-700 text-sm pb-1 transition duration-300 ease-in-out" to={`/${std.id}`}>
-            <input type="button" value="Details"/>
+          <Link
+            className="w-full text-center text-white font-bold border border-rose-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-yellow-500 hover:bg-rose-700 text-sm pb-1 transition duration-300 ease-in-out"
+            to={`/${std.id}`}
+          >
+            <input type="button" value="Details" />
           </Link>
           <span className="w-full text-center text-white font-bold border border-indigo-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-indigo-500 hover:bg-indigo-700 text-sm pb-1 transition duration-300 ease-in-out">
             {std.editMode == false && (
@@ -118,22 +148,22 @@ const StudentItem = (props) => {
             )}
           </span>
 
-          {std.status == undefined && (
+          {std.status == "none" && (
             <span className="w-full text-center text-white font-bold border border-green-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-green-500 hover:bg-green-700 text-sm pb-1 transition duration-300 ease-in-out">
               <input type="button" value="Present" onClick={presenthandle} />
             </span>
           )}
-          {std.status == undefined && (
+          {std.status == "none" && (
             <span className="w-full text-center text-white font-bold border border-fuchsia-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-fuchsia-500 hover:bg-fuchsia-700 text-sm pb-1 transition duration-300 ease-in-out">
               <input type="button" value="Absent" onClick={absenthandle} />
             </span>
           )}
-          {std.status == true && (
+          {std.status == "present" && (
             <span className="w-full text-center text-white font-bold border border-fuchsia-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-fuchsia-500 hover:bg-fuchsia-700 text-sm pb-1 transition duration-300 ease-in-out">
               <input type="button" value="Absent" onClick={absenthandle} />
             </span>
           )}
-          {std.status == false && (
+          {std.status == "absent" && (
             <span className="w-full text-center text-white font-bold border border-green-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-green-500 hover:bg-green-700 text-sm pb-1 transition duration-300 ease-in-out">
               <input type="button" value="Present" onClick={presenthandle} />
             </span>

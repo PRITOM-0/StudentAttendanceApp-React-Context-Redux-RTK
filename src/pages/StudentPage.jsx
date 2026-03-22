@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 
 const StudentPage = () => {
   const { stdId } = useParams();
-  const state = useSelector((state) => state.student);
-  const student = [...state.filter((el) => el.id == stdId)][0];
+  const {students,isLoading,isError,error} = useSelector((state) => state.student);
+  const student = [...students.filter((el) => el.id == stdId)][0];
  
 
   return (
@@ -27,13 +27,13 @@ const StudentPage = () => {
               <p className="my-5 text-xl font-bold mb-2 text-orange-600">
                 Class {student.class}
               </p>
-              {student.status==true && <p className="text-xl font-bold text-orange-600 border rounded bg-green-500 text-white my-10">
+              {student.status=="present" && <p className="text-xl font-bold text-orange-600 border rounded bg-green-500 text-white my-10">
                 Present
               </p>}
-              {student.status==false && <p className="text-xl font-bold text-orange-600 border rounded bg-red-500 text-white my-10">
+              {student.status=="absent" && <p className="text-xl font-bold text-orange-600 border rounded bg-red-500 text-white my-10">
                 Absent
               </p>}
-              {student.status==undefined && <p className="text-xl font-bold text-orange-600 border rounded bg-yellow-500 text-white my-10">
+              {student.status=="none" && <p className="text-xl font-bold text-orange-600 border rounded bg-yellow-500 text-white my-10">
                 Undefine
               </p>}
             </div>
