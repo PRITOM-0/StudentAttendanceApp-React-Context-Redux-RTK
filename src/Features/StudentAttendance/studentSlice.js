@@ -5,7 +5,7 @@ const initialState = {
   isError: false,
   error: null,
 };
-const URL = "http://localhost:3000/students";
+const URL = "https://studentattendanceapp-react-context-redux-7q59.onrender.com/students";
 
 export const fetchStudents = createAsyncThunk(
   "student/fetchStudents",
