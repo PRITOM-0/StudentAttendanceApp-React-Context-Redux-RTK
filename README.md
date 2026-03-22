@@ -152,4 +152,21 @@
 
  
 
-Do you want me to make that next?
+For fake server
+creation:
+1. npm install -g json-server
+2. Create a db.json file 
+3. Add on db.json
+{
+  "posts": [
+    { "id": 1, "title": "json-server", "author": "typicode" }
+  ],
+  "comments": [
+    { "id": 1, "body": "some comment", "postId": 1 }
+  ],
+  "profile": { "name": "typicode" }
+}
+
+show:
+json-server --watch db.json
+get link.

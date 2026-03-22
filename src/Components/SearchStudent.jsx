@@ -10,7 +10,9 @@ const demoSearch = {
   status: "",
 };
 const SearchStudent = () => {
-  const state = useSelector((state) => state.student);
+  const { students, isLoading, isError, error } = useSelector(
+    (state) => state.student,
+  );
   const [SearchStudent, setSearchStudent] = useState([]);
   const [searchData, setSearchData] = useState(demoSearch);
 
@@ -26,7 +28,7 @@ const SearchStudent = () => {
       return;
     }
 
-    const filtered = state.filter((el) => {
+    const filtered = students.filter((el) => {
       const nameMatch =
         searchData.name === "" ||
         el.name.toLowerCase().includes(searchData.name.toLowerCase());
@@ -37,18 +39,15 @@ const SearchStudent = () => {
 
       const statusMatch =
         searchData.status === "" ||
-        el.status ===
-          (searchData.status === "true"
-            ? true
-            : searchData.status === "false"
-              ? false
-              : undefined);
+        searchData.status == el.status ||
+        searchData.status == el.status ||
+        searchData.status == el.status;
 
       return nameMatch && classMatch && statusMatch;
     });
 
     setSearchStudent(filtered);
-  }, [searchData, state]);
+  }, [searchData, students]);
 
   const clearHandle = () => {
     setSearchStudent([]);
@@ -118,9 +117,9 @@ const SearchStudent = () => {
               {" "}
               Select Attendance
             </option>
-            <option value={undefined}>Undefine</option>
-            <option value={true}>Present</option>
-            <option value={false}>Absent</option>
+            <option value= "none">Undefine</option>
+            <option value="present">Present</option>
+            <option value="absent">Absent</option>
           </select>
 
           <button
@@ -141,6 +140,11 @@ const SearchStudent = () => {
                 ))}
               </div>
             </div>
+          )}
+          {SearchStudent.length == 0 && !isLoading && !isError && (
+            <p className="text-center text-orange-600 py-5 font-bold text-2xl">
+              No students found
+            </p>
           )}
         </div>
       </fieldset>

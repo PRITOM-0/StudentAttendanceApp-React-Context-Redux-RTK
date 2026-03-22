@@ -1,23 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StudentItem from "./StudentItem";
 import StudentTableHead from "./StudentTableHead";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchStudents } from "../Features/StudentAttendance/studentSlice";
 
 const StudentList = () => {
-  const state = useSelector((state) => state.student);
+  const {students,isLoading,isError,error} = useSelector((state) => state.student);
+  const dispatch = useDispatch();
   const [listMode, setListMode] = useState("All");
-  let students = state;
+
+useEffect(()=>{
+  dispatch(fetchStudents())
+},[dispatch])
+
+  let newStudents = students;
   const listhandle = (m) => {
     setListMode(m);
   };
   if (listMode == "All") {
-    students = state;
+    newStudents = students;
   } else if (listMode == "P") {
-    students = [...state.filter((el) => el.status == true)];
+    newStudents = [...students.filter((el) => el.status == "present")];
   } else if (listMode == "A") {
-    students = [...state.filter((el) => el.status == false)];
+    newStudents = [...students.filter((el) => el.status == "absent")];
   } else if (listMode == "U") {
-    students = [...state.filter((el) => el.status == undefined)];
+    newStudents = [...students.filter((el) => el.status == "none")];
   }
 
   return (
@@ -69,7 +76,10 @@ const StudentList = () => {
             <StudentTableHead />
           </div>
           <div className="h-60 overflow-y-auto scroll-container">
-            {students?.map((std) => (
+            {isLoading && <p className="text-center font-bold text-2xl">Loading...</p>}
+            {isError && <p className="text-center font-bold text-2xl">Error: {error}</p>}
+            {newStudents.length==0 && !isLoading && !isError && <p className="text-center text-orange-600 font-bold text-2xl">No students found</p>}
+            {newStudents?.map((std) => (
               <div key={std.id}>
                 <StudentItem std={std} />
               </div>
