@@ -1,13 +1,22 @@
 import React from "react";
 import ppImg from "../assets/pp.png";
 import { useParams } from "react-router";
-import { useSelector } from "react-redux";
+import { useFetchStudentsQuery } from "../Features/StudentAttendance/StudentApi";
 
 const StudentPage = () => {
   const { stdId } = useParams();
-  const {students,isLoading,isError,error} = useSelector((state) => state.student);
-  const student = [...students.filter((el) => el.id == stdId)][0];
- 
+  const { data: students, isLoading, isError } = useFetchStudentsQuery();
+
+  // ✅ handle loading first
+  if (isLoading) return <p>Loading...</p>;
+
+  // ✅ handle error
+  if (isError) return <p>Error loading data</p>;
+
+  // ✅ safe access
+  const student = students?.find((el) => el.id == stdId);
+
+  if (!student) return <p>Student not found</p>;
 
   return (
     <div className="sm:w-[80%] md:w-3/4 lg:w-2/3  mx-auto py-10 border border-2 border-orange-500 rounded-lg  shadow bg-white ">
@@ -27,15 +36,21 @@ const StudentPage = () => {
               <p className="my-5 text-xl font-bold mb-2 text-orange-600">
                 Class {student.class}
               </p>
-              {student.status=="present" && <p className="text-xl font-bold text-orange-600 border rounded bg-green-500 text-white my-10">
-                Present
-              </p>}
-              {student.status=="absent" && <p className="text-xl font-bold text-orange-600 border rounded bg-red-500 text-white my-10">
-                Absent
-              </p>}
-              {student.status=="none" && <p className="text-xl font-bold text-orange-600 border rounded bg-yellow-500 text-white my-10">
-                Undefine
-              </p>}
+              {student.status == "present" && (
+                <p className="text-xl font-bold text-orange-600 border rounded bg-green-500 text-white my-10">
+                  Present
+                </p>
+              )}
+              {student.status == "absent" && (
+                <p className="text-xl font-bold text-orange-600 border rounded bg-red-500 text-white my-10">
+                  Absent
+                </p>
+              )}
+              {student.status == "none" && (
+                <p className="text-xl font-bold text-orange-600 border rounded bg-yellow-500 text-white my-10">
+                  Undefine
+                </p>
+              )}
             </div>
           </div>
         </div>

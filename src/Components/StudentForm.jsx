@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import { classes } from "../assets/data";
-import { useDispatch } from "react-redux";
-import { addStudents } from "../Features/StudentAttendance/studentSlice";
+import { useAddStudentsMutation } from "../Features/StudentAttendance/StudentApi";
+
 const StudentForm = () => {
-  const dispatch = useDispatch();
+  const [addStudents] = useAddStudentsMutation();
   const [inputName, setInputName] = useState("");
   const [inputClass, setInputClass] = useState("");
 
@@ -21,7 +21,7 @@ const StudentForm = () => {
       status: "none",
       editMode: false,
     };
-    dispatch(addStudents(student));
+    addStudents(student);
     setInputClass("");
     setInputName("");
   };

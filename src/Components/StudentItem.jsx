@@ -1,17 +1,15 @@
 import { useContext, useState } from "react";
 import { classes } from "../assets/data";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router";
+
 import {
-  absentStudents,
-  deleteStudents,
-  editStudent,
-  presentStudents,
-  updateStudents,
-} from "../Features/StudentAttendance/studentSlice";
+  useDeleteStudentsMutation,
+  useUpdateStudentsMutation,
+} from "../Features/StudentAttendance/StudentApi";
 
 const StudentItem = (props) => {
-  const dispatch = useDispatch();
+  const [deleteStudents] = useDeleteStudentsMutation();
+  const [updateStudents] = useUpdateStudentsMutation();
   const { std } = props;
   const [editName, setEditName] = useState("");
   const [editClass, setEditClass] = useState("");
@@ -26,11 +24,17 @@ const StudentItem = (props) => {
   };
 
   const deletehandle = () => {
-    dispatch(deleteStudents(std.id));
+    deleteStudents(std.id);
     showEditBar();
   };
   const edithandle = () => {
-    dispatch(editStudent(std));
+    const rest = {
+      name: std.name,
+      class: std.class,
+      status: std.status,
+      editMode: true,
+    };
+    updateStudents({ id: std.id, student: rest });
     setEditName(std.name);
     setEditClass(std.class);
   };
@@ -45,7 +49,7 @@ const StudentItem = (props) => {
       status: std.status,
       editMode: false,
     };
-    dispatch(updateStudents({id: std.id, student: rest}));
+    updateStudents({ id: std.id, student: rest });
     setEditName("");
     setEditClass("");
     showEditBar();
@@ -57,7 +61,7 @@ const StudentItem = (props) => {
       status: "present",
       editMode: std.editMode,
     };
-    dispatch(presentStudents({id: std.id, student: rest}));
+    updateStudents({ id: std.id, student: rest });
     showEditBar();
   };
   const absenthandle = () => {
@@ -67,7 +71,7 @@ const StudentItem = (props) => {
       status: "absent",
       editMode: std.editMode,
     };
-    dispatch(absentStudents({id: std.id, student: rest}));
+    updateStudents({ id: std.id, student: rest });
     showEditBar();
   };
 

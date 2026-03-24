@@ -4,15 +4,14 @@ import { useEffect } from "react";
 import { classes } from "../assets/data";
 import StudentTableHead from "./StudentTableHead";
 import { useDispatch, useSelector } from "react-redux";
+import { useFetchStudentsQuery } from "../Features/StudentAttendance/StudentApi";
 const demoSearch = {
   name: "",
   class: "",
   status: "",
 };
 const SearchStudent = () => {
-  const { students, isLoading, isError, error } = useSelector(
-    (state) => state.student,
-  );
+  const { data:students, isLoading, isError, error } = useFetchStudentsQuery()
   const [SearchStudent, setSearchStudent] = useState([]);
   const [searchData, setSearchData] = useState(demoSearch);
 

@@ -2,16 +2,11 @@ import React, { useEffect, useState } from "react";
 import StudentItem from "./StudentItem";
 import StudentTableHead from "./StudentTableHead";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchStudents } from "../Features/StudentAttendance/studentSlice";
+import { useFetchStudentsQuery } from "../Features/StudentAttendance/StudentApi";
 
 const StudentList = () => {
-  const {students,isLoading,isError,error} = useSelector((state) => state.student);
-  const dispatch = useDispatch();
+  const { data: students, isLoading, isError, error } = useFetchStudentsQuery();
   const [listMode, setListMode] = useState("All");
-
-useEffect(()=>{
-  dispatch(fetchStudents())
-},[dispatch])
 
   let newStudents = students;
   const listhandle = (m) => {
@@ -76,9 +71,17 @@ useEffect(()=>{
             <StudentTableHead />
           </div>
           <div className="h-60 overflow-y-auto scroll-container">
-            {isLoading && <p className="text-center font-bold text-2xl">Loading...</p>}
-            {isError && <p className="text-center font-bold text-2xl">Error: {error}</p>}
-            {newStudents.length==0 && !isLoading && !isError && <p className="text-center text-orange-600 font-bold text-2xl">No students found</p>}
+            {isLoading && (
+              <p className="text-center font-bold text-2xl">Loading...</p>
+            )}
+            {isError && (
+              <p className="text-center font-bold text-2xl">Error: {error}</p>
+            )}
+            {newStudents?.length == 0 && !isLoading && !isError && (
+              <p className="text-center text-orange-600 font-bold text-2xl">
+                No students found
+              </p>
+            )}
             {newStudents?.map((std) => (
               <div key={std.id}>
                 <StudentItem std={std} />

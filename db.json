@@ -8,11 +8,18 @@
   ],
   "students": [
     {
-      "id": "A2abSHtN9fw",
+      "name": "Pritom ",
+      "class": "10",
+      "status": "absent",
+      "editMode": false,
+      "id": "A2abSHtN9fw"
+    },
+    {
       "name": "Pritom Saha",
-      "class": "12",
-      "status": "none",
-      "editMode": false
+      "class": "13",
+      "status": "present",
+      "editMode": false,
+      "id": "dpeaX7jCMQ4"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
