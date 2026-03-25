@@ -1,6 +1,6 @@
 // npm install @reduxjs/toolkit react-redux
 import { configureStore } from "@reduxjs/toolkit";
-import { rootApi } from "../Features/StudentAttendance/StudentApi";
+import { rootApi } from "../Features/Api/rootApi";
 
 export const store = configureStore({
   reducer: {

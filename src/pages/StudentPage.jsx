@@ -1,4 +1,3 @@
-import React from "react";
 import ppImg from "../assets/pp.png";
 import { useParams } from "react-router";
 import { useFetchStudentsQuery } from "../Features/StudentAttendance/StudentApi";
@@ -7,13 +6,10 @@ const StudentPage = () => {
   const { stdId } = useParams();
   const { data: students, isLoading, isError } = useFetchStudentsQuery();
 
-  // ✅ handle loading first
   if (isLoading) return <p>Loading...</p>;
 
-  // ✅ handle error
   if (isError) return <p>Error loading data</p>;
 
-  // ✅ safe access
   const student = students?.find((el) => el.id == stdId);
 
   if (!student) return <p>Student not found</p>;

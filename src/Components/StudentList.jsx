@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import StudentItem from "./StudentItem";
 import StudentTableHead from "./StudentTableHead";
-import { useDispatch, useSelector } from "react-redux";
 import { useFetchStudentsQuery } from "../Features/StudentAttendance/StudentApi";
 
 const StudentList = () => {

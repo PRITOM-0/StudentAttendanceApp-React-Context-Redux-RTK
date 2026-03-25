@@ -20,6 +20,27 @@
       "status": "present",
       "editMode": false,
       "id": "dpeaX7jCMQ4"
+    },
+    {
+      "name": "Rakib",
+      "class": "11",
+      "status": "absent",
+      "editMode": false,
+      "id": "jrHWeEgruIo"
+    },
+    {
+      "name": "Sagor",
+      "class": "11",
+      "status": "absent",
+      "editMode": false,
+      "id": "pbH7zmEuyRE"
+    },
+    {
+      "name": "Ajoy",
+      "class": "11",
+      "status": "present",
+      "editMode": false,
+      "id": "NNHtlbGJQbo"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

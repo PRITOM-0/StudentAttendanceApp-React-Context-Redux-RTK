@@ -1,9 +1,8 @@
-import React, { useContext, useState } from "react";
+import { useState } from "react";
 import StudentItem from "./StudentItem";
 import { useEffect } from "react";
 import { classes } from "../assets/data";
 import StudentTableHead from "./StudentTableHead";
-import { useDispatch, useSelector } from "react-redux";
 import { useFetchStudentsQuery } from "../Features/StudentAttendance/StudentApi";
 const demoSearch = {
   name: "",
@@ -11,7 +10,7 @@ const demoSearch = {
   status: "",
 };
 const SearchStudent = () => {
-  const { data:students, isLoading, isError, error } = useFetchStudentsQuery()
+  const { data: students, isLoading, isError } = useFetchStudentsQuery();
   const [SearchStudent, setSearchStudent] = useState([]);
   const [searchData, setSearchData] = useState(demoSearch);
 
@@ -116,7 +115,7 @@ const SearchStudent = () => {
               {" "}
               Select Attendance
             </option>
-            <option value= "none">Undefine</option>
+            <option value="none">Undefine</option>
             <option value="present">Present</option>
             <option value="absent">Absent</option>
           </select>
