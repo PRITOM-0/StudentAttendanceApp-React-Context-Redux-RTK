@@ -1,58 +1,48 @@
 import ppImg from "../assets/pp.png";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useFetchStudentsQuery } from "../Features/StudentAttendance/StudentApi";
 
 const StudentPage = () => {
   const { stdId } = useParams();
   const { data: students, isLoading, isError } = useFetchStudentsQuery();
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p className="text-center text-2xl mt-10">Loading...</p>;
+  if (isError) return <p className="text-center text-2xl mt-10">Error loading data</p>;
 
-  if (isError) return <p>Error loading data</p>;
+  const student = students?.find((el) => el.id === stdId);
+  if (!student) return <p className="text-center text-2xl mt-10">Student not found</p>;
 
-  const student = students?.find((el) => el.id == stdId);
-
-  if (!student) return <p>Student not found</p>;
+  const statusClasses = {
+    present: "bg-green-500",
+    absent: "bg-red-500",
+    none: "bg-yellow-500",
+  };
 
   return (
-    <div className="sm:w-[80%] md:w-3/4 lg:w-2/3  mx-auto py-10 border border-2 border-orange-500 rounded-lg  shadow bg-white ">
-      <div className="w-[80%] mx-auto  py-5 bg-orange-100 border border-orange-500 text-center rounded-lg ">
-        <h2 className="w-[80%] mx-auto text-center text-white  text-xl text-orange-500  py-2 rounded  mb-3 bg-orange-600">
+    <div className="sm:w-11/12 md:w-3/4 lg:w-2/3 mx-auto mt-10 p-6 rounded-2xl bg-gradient-to-r from-blue-50 via-purple-50 to-indigo-50 shadow-2xl">
+      <div className="w-full rounded-2xl bg-gradient-to-r from-indigo-100 via-purple-100 to-blue-100 p-6 shadow-lg">
+        <h2 className="text-xl font-bold text-center text-indigo-600 mb-6 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 text-white py-2 rounded-lg">
           Student Information
         </h2>
-        <div className="w-[80%] mx-auto flex gap-5 py-2">
-          <div className="w-[50%] border border-2 h-50 rounded-lg border-orange-500 p-1">
-            <img className="w-full h-full object-cover" src={ppImg} alt="" />
+
+        <div className="flex flex-col md:flex-row gap-6 items-center">
+          <div className="md:w-1/2 border-2 border-indigo-300 rounded-xl overflow-hidden shadow-lg">
+            <img src={ppImg} alt="profile" className="w-full h-full object-cover" />
           </div>
-          <div className="w-[50%] border border-2 h-50 rounded-lg border-orange-500">
-            <div className=" mx-auto h-full rounded-lg shadow p-4 bg-white">
-              <h2 className="text-xl my-5 font-bold mb-2 text-orange-600">
-                {student.name}
-              </h2>
-              <p className="my-5 text-xl font-bold mb-2 text-orange-600">
-                Class {student.class}
-              </p>
-              {student.status == "present" && (
-                <p className="text-xl font-bold text-orange-600 border rounded bg-green-500 text-white my-10">
-                  Present
-                </p>
-              )}
-              {student.status == "absent" && (
-                <p className="text-xl font-bold text-orange-600 border rounded bg-red-500 text-white my-10">
-                  Absent
-                </p>
-              )}
-              {student.status == "none" && (
-                <p className="text-xl font-bold text-orange-600 border rounded bg-yellow-500 text-white my-10">
-                  Undefine
-                </p>
-              )}
-            </div>
+
+          <div className="md:w-1/2 bg-white rounded-xl p-4 shadow-lg flex flex-col gap-3">
+            <h2 className="text-2xl font-bold text-indigo-600">{student.name}</h2>
+            <p className="text-lg font-semibold text-indigo-500">Class {student.class}</p>
+            <p
+              className={`text-white font-bold text-center py-2 rounded-lg ${statusClasses[student.status]}`}
+            >
+              {student.status === "none" ? "Undefined" : student.status.charAt(0).toUpperCase() + student.status.slice(1)}
+            </p>
+            <button className="mt-4 py-2 px-6 rounded-full font-semibold text-white bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 shadow-lg hover:scale-105 transition-transform duration-300">
+              More Details
+            </button>
           </div>
         </div>
-        <button className=" w-[80%] mx-auto border border-2 mt-2 rounded-lg border-orange-500 bg-orange-600">
-          <p className="text-white font-semibold">More Details</p>
-        </button>
       </div>
     </div>
   );
