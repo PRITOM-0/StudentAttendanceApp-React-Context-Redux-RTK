@@ -1,179 +1,169 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { classes } from "../assets/data";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import {
-  absentStudents,
-  deleteStudents,
-  editStudent,
-  presentStudents,
-  updateStudents,
-} from "../Features/StudentAttendance/studentSlice";
+  useDeleteStudentsMutation,
+  useUpdateStudentsMutation,
+} from "../Features/StudentAttendance/StudentApi";
 
-const StudentItem = (props) => {
-  const dispatch = useDispatch();
-  const { std } = props;
-  const [editName, setEditName] = useState("");
-  const [editClass, setEditClass] = useState("");
-  const [studentEditBar, setStudentEditBar] = useState(false);
+const StudentItem = ({ std }) => {
+  const [deleteStudents] = useDeleteStudentsMutation();
+  const [updateStudents] = useUpdateStudentsMutation();
 
-  const showEditBar = () => {
-    if (studentEditBar == true) {
-      setStudentEditBar(false);
-    } else {
-      setStudentEditBar(true);
-    }
+  const [editName, setEditName] = useState(std.name);
+  const [editClass, setEditClass] = useState(std.class);
+  const [editMode, setEditMode] = useState(std.editMode);
+  const [showActions, setShowActions] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
+
+  const toggleEdit = () => setEditMode(!editMode);
+  const toggleActions = () => {
+    setShowActions(!showActions);
+    setIsSelected(!isSelected); // Add border on click
   };
 
-  const deletehandle = () => {
-    dispatch(deleteStudents(std.id));
-    showEditBar();
+  const deleteHandle = () => {
+    deleteStudents(std.id);
+    setShowActions(false);
+    setIsSelected(false);
   };
-  const edithandle = () => {
-    dispatch(editStudent(std));
-    setEditName(std.name);
-    setEditClass(std.class);
-  };
-  const updatehandle = () => {
-    if (editName.trim() === "" || editClass.trim() === "") {
+
+  const updateHandle = () => {
+    if (!editName.trim() || !editClass.trim()) {
       alert("Enter Student Information");
       return;
     }
-    const rest = {
-      name: editName,
-      class: editClass,
-      status: std.status,
-      editMode: false,
-    };
-    dispatch(updateStudents({id: std.id, student: rest}));
-    setEditName("");
-    setEditClass("");
-    showEditBar();
+    updateStudents({
+      id: std.id,
+      student: { ...std, name: editName, class: editClass, editMode: false },
+    });
+    setEditMode(false);
+    setShowActions(false);
   };
-  const presenthandle = () => {
-    const rest = {
-      name: std.name,
-      class: std.class,
-      status: "present",
-      editMode: std.editMode,
-    };
-    dispatch(presentStudents({id: std.id, student: rest}));
-    showEditBar();
+
+  const updateStatus = (status) => {
+    updateStudents({ id: std.id, student: { ...std, status } });
+    setShowActions(false);
   };
-  const absenthandle = () => {
-    const rest = {
-      name: std.name,
-      class: std.class,
-      status: "absent",
-      editMode: std.editMode,
-    };
-    dispatch(absentStudents({id: std.id, student: rest}));
-    showEditBar();
+
+  const statusColors = {
+    present: "bg-green-500",
+    absent: "bg-red-500",
+    none: "bg-yellow-500",
   };
 
   return (
-    <>
-      <div className=" w-[90%] mx-auto group flex flex-col justify-center ">
-        <div
-          className={
-            !std.editMode
-              ? "mb-1 text-center text-lg  py-2  flex justify-between px-10 border border-orange-700 rounded text-sm font-bold text-orange-500  hover:bg-orange-100"
-              : " mb-1 text-center text-lg  py-2  flex justify-between px-10 border border-orange-700 rounded text-sm font-bold text-orange-500 bg-orange-600"
-          }
-          onClick={showEditBar}
-        >
-          <span className="w-25 text-start">
-            {std.editMode == false && std.name}
-            {std.editMode == true && (
+    <div
+      className={`w-11/12 mx-auto my-2 p-3 rounded-xl bg-gradient-to-r from-blue-100 via-purple-100 to-indigo-100 shadow-lg transition-all duration-200 ${
+        isSelected ? "border-4 border-indigo-500" : ""
+      }`}
+    >
+      {/* Row */}
+      <div
+        className="flex justify-between items-center cursor-pointer"
+        onClick={toggleActions}
+      >
+        {/* Fixed Width Columns: Name | Class | Status */}
+        <div className="flex w-full gap-4 items-center">
+          {/* Name (Start) */}
+          <div className="w-40 flex-shrink-0">
+            {editMode ? (
               <input
-                className="w-25  bg-orange-100 px-2 py-1 rounded border border-orange-500"
                 type="text"
-                name="stdname"
-                placeholder="Enter name"
                 value={editName}
-                onChange={(e) => {
-                  setEditName(e.target.value);
-                }}
+                onChange={(e) => setEditName(e.target.value)}
+                className="p-2 rounded-lg border border-indigo-300 focus:ring-2 focus:ring-purple-400 w-full"
               />
+            ) : (
+              <span className="text-indigo-700 font-semibold">{std.name}</span>
             )}
-          </span>
-          <span className="w-25">
-            {std.editMode == false && std.class}
-            {std.editMode == true && (
+          </div>
+
+          {/* Class (Center) */}
+          <div className="w-32 flex-shrink-0 text-center">
+            {editMode ? (
               <select
-                className="bg-orange-100 px-2 py-1 rounded border border-orange-500"
-                name="stdclass"
                 value={editClass}
-                onChange={(e) => {
-                  setEditClass(e.target.value);
-                }}
+                onChange={(e) => setEditClass(e.target.value)}
+                className="p-2 rounded-lg border border-indigo-300 focus:ring-2 focus:ring-purple-400 w-full"
               >
-                {classes?.map((el) => (
-                  <option key={el} value={el}>
-                    {el}
-                  </option>
+                {classes.map((c) => (
+                  <option key={c} value={c}>{c}</option>
                 ))}
               </select>
+            ) : (
+              <span className="text-indigo-500 font-medium">{std.class}</span>
             )}
-          </span>
-          <span
-            className={
-              std.editMode ? "w-25 text-white text-end pt-1" : "w-25 text-end"
-            }
-          >
-            {std.status == "none" && "None"}
-            {std.status == "present" && "Present"}
-            {std.status == "absent" && "Absent"}
-          </span>
-        </div>
-        <div
-          className={
-            studentEditBar
-              ? "text-white-500 mx-auto mb-2 h-full flex items-center px-6 pb-1"
-              : " hidden mb-2"
-          }
-        >
-          <Link
-            className="w-full text-center text-white font-bold border border-rose-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-yellow-500 hover:bg-rose-700 text-sm pb-1 transition duration-300 ease-in-out"
-            to={`/${std.id}`}
-          >
-            <input type="button" value="Details" />
-          </Link>
-          <span className="w-full text-center text-white font-bold border border-indigo-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-indigo-500 hover:bg-indigo-700 text-sm pb-1 transition duration-300 ease-in-out">
-            {std.editMode == false && (
-              <input type="button" value="Edit" onClick={edithandle} />
-            )}
-            {std.editMode == true && (
-              <input type="button" value="Update" onClick={updatehandle} />
-            )}
-          </span>
+          </div>
 
-          {std.status == "none" && (
-            <span className="w-full text-center text-white font-bold border border-green-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-green-500 hover:bg-green-700 text-sm pb-1 transition duration-300 ease-in-out">
-              <input type="button" value="Present" onClick={presenthandle} />
+          {/* Status (End) */}
+          <div className="w-28 flex-shrink-0 text-center ml-auto">
+            <span
+              className={`px-3 py-1 rounded-lg text-white font-bold ${
+                statusColors[std.status]
+              }`}
+            >
+              {std.status === "none"
+                ? "Undefined"
+                : std.status.charAt(0).toUpperCase() + std.status.slice(1)}
             </span>
-          )}
-          {std.status == "none" && (
-            <span className="w-full text-center text-white font-bold border border-fuchsia-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-fuchsia-500 hover:bg-fuchsia-700 text-sm pb-1 transition duration-300 ease-in-out">
-              <input type="button" value="Absent" onClick={absenthandle} />
-            </span>
-          )}
-          {std.status == "present" && (
-            <span className="w-full text-center text-white font-bold border border-fuchsia-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-fuchsia-500 hover:bg-fuchsia-700 text-sm pb-1 transition duration-300 ease-in-out">
-              <input type="button" value="Absent" onClick={absenthandle} />
-            </span>
-          )}
-          {std.status == "absent" && (
-            <span className="w-full text-center text-white font-bold border border-green-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-green-500 hover:bg-green-700 text-sm pb-1 transition duration-300 ease-in-out">
-              <input type="button" value="Present" onClick={presenthandle} />
-            </span>
-          )}
-          <span className="w-full text-center text-white font-bold border border-rose-500 px-2 rounded-full mx-1 my-1 w-1/4 bg-rose-500 hover:bg-rose-700 text-sm pb-1 transition duration-300 ease-in-out">
-            <input type="button" value="Delete" onClick={deletehandle} />
-          </span>
+          </div>
         </div>
       </div>
-    </>
+
+      {/* Action Buttons */}
+      {showActions && (
+        <div className="flex flex-wrap justify-center gap-2 mt-3">
+          <Link
+            to={`/${std.id}`}
+            className="px-3 py-1 rounded-full bg-indigo-500 text-white font-bold shadow hover:scale-105 transition-transform duration-300"
+          >
+            Details
+          </Link>
+
+          {editMode ? (
+            <button
+              onClick={updateHandle}
+              className="px-3 py-1 rounded-full bg-purple-500 text-white font-bold shadow hover:scale-105 transition-transform duration-300"
+            >
+              Update
+            </button>
+          ) : (
+            <button
+              onClick={toggleEdit}
+              className="px-3 py-1 rounded-full bg-purple-500 text-white font-bold shadow hover:scale-105 transition-transform duration-300"
+            >
+              Edit
+            </button>
+          )}
+
+          {std.status !== "present" && (
+            <button
+              onClick={() => updateStatus("present")}
+              className="px-3 py-1 rounded-full bg-green-500 text-white font-bold shadow hover:scale-105 transition-transform duration-300"
+            >
+              Present
+            </button>
+          )}
+
+          {std.status !== "absent" && (
+            <button
+              onClick={() => updateStatus("absent")}
+              className="px-3 py-1 rounded-full bg-red-500 text-white font-bold shadow hover:scale-105 transition-transform duration-300"
+            >
+              Absent
+            </button>
+          )}
+
+          <button
+            onClick={deleteHandle}
+            className="px-3 py-1 rounded-full bg-rose-500 text-white font-bold shadow hover:scale-105 transition-transform duration-300"
+          >
+            Delete
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
 
