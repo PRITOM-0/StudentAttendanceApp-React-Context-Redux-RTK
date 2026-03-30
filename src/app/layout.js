@@ -1,25 +1,18 @@
-import { Geist, Geist_Mono } from "next/font/google";
+"use client";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata = {
-  title: "Student Attendance App",
-  description: "Build by Pritom Saha",
-};
+import Navbar from "@/components/Navbar";
+import { Provider } from "react-redux";
+import { store } from "@/features/store/store";
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>{children}</body>
+    <html lang="en">
+      <body>
+        <Navbar />
+        <Provider store={store}>
+          {children}
+        </Provider>
+      </body>
     </html>
   );
 }
