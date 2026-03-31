@@ -54,7 +54,7 @@ const StudentItem = ({ std }) => {
 
   return (
     <div
-      className={`w-11/12 mx-auto my-2 p-3 rounded-xl bg-gradient-to-r from-blue-100 via-purple-100 to-indigo-100 shadow-lg transition-all duration-200 ${
+      className={`w-11/12 mx-auto my-2 p-3 rounded-xl bg-linear-to-r from-blue-100 via-purple-100 to-indigo-100 shadow-lg transition-all duration-200 ${
         isSelected ? "border-4 border-indigo-500" : ""
       }`}
     >
@@ -66,7 +66,7 @@ const StudentItem = ({ std }) => {
         {/* Fixed Width Columns: Name | Class | Status */}
         <div className="flex w-full gap-4 items-center">
           {/* Name (Start) */}
-          <div className="w-40 flex-shrink-0">
+          <div className="w-40 shrink-0">
             {editMode ? (
               <input
                 type="text"
@@ -80,7 +80,7 @@ const StudentItem = ({ std }) => {
           </div>
 
           {/* Class (Center) */}
-          <div className="w-32 flex-shrink-0 text-center">
+          <div className="w-32 shrink-0 text-center">
             {editMode ? (
               <select
                 value={editClass}
@@ -97,7 +97,7 @@ const StudentItem = ({ std }) => {
           </div>
 
           {/* Status (End) */}
-          <div className="w-28 flex-shrink-0 text-center ml-auto">
+          <div className="w-28 shrink-0 text-center ml-auto">
             <span
               className={`px-3 py-1 rounded-lg text-white font-bold ${
                 statusColors[std.status]

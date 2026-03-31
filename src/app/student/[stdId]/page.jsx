@@ -21,9 +21,9 @@ const StudentPage = () => {
   };
 
   return (
-    <div className="sm:w-11/12 md:w-3/4 lg:w-2/3 mx-auto mt-10 p-6 rounded-2xl bg-gradient-to-r from-blue-50 via-purple-50 to-indigo-50 shadow-2xl">
-      <div className="w-full rounded-2xl bg-gradient-to-r from-indigo-100 via-purple-100 to-blue-100 p-6 shadow-lg">
-        <h2 className="text-xl font-bold text-center text-indigo-600 mb-6 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 text-white py-2 rounded-lg">
+    <div className="sm:w-11/12 md:w-3/4 lg:w-2/3 mx-auto mt-10 p-6 rounded-2xl bg-linear-to-r from-blue-50 via-purple-50 to-indigo-50 shadow-2xl">
+      <div className="w-full rounded-2xl bg-linear-to-r from-indigo-100 via-purple-100 to-blue-100 p-6 shadow-lg">
+        <h2 className="text-xl font-bold text-center text-indigo-600 mb-6 bg-linear-to-r from-blue-500 via-purple-500 to-indigo-500 py-2 rounded-lg">
           Student Information
         </h2>
 
@@ -45,7 +45,7 @@ const StudentPage = () => {
             >
               {student.status === "none" ? "Undefined" : student.status.charAt(0).toUpperCase() + student.status.slice(1)}
             </p>
-            <button className="mt-4 py-2 px-6 rounded-full font-semibold text-white bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 shadow-lg hover:scale-105 transition-transform duration-300">
+            <button className="mt-4 py-2 px-6 rounded-full font-semibold text-white bg-linear-to-r from-blue-500 via-purple-500 to-indigo-500 shadow-lg hover:scale-105 transition-transform duration-300">
               More Details
             </button>
           </div>

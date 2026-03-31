@@ -28,7 +28,7 @@ const StudentList = () => {
     filteredStudents = students.filter((s) => s.status === "none");
 
   return (
-    <div className="w-11/12 mx-auto my-5 bg-gradient-to-r from-blue-100 via-purple-100 to-indigo-100 p-5 rounded-2xl shadow-xl">
+    <div className="w-11/12 mx-auto my-5 bg-linear-to-r from-blue-100 via-purple-100 to-indigo-100 p-5 rounded-2xl shadow-xl">
       {/* Header */}
       <h2 className="text-2xl font-bold text-indigo-700 text-center mb-5">
         {listMode === "All" && "All Students"}
@@ -50,8 +50,8 @@ const StudentList = () => {
             onClick={() => handleFilter(btn.value)}
             className={`px-4 py-2 rounded-lg font-semibold text-white shadow-lg transition-transform duration-300 transform hover:scale-105 ${
               listMode === btn.value
-                ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-blue-500"
-                : "bg-gradient-to-r from-blue-300 via-purple-300 to-indigo-300 hover:from-indigo-500 hover:via-purple-500 hover:to-blue-500"
+                ? "bg-linear-to-r from-indigo-500 via-purple-500 to-blue-500"
+                : "bg-linear-to-r from-blue-300 via-purple-300 to-indigo-300 hover:from-indigo-500 hover:via-purple-500 hover:to-blue-500"
             }`}
           >
             {btn.label}
@@ -62,7 +62,7 @@ const StudentList = () => {
       <StudentTableHead />
 
       {/* Student Items */}
-      <div className="max-h-[400px] overflow-y-auto mt-2">
+      <div className="max-h-100 overflow-y-auto mt-2">
         {isLoading && (
           <p className="text-center text-indigo-600 font-bold text-xl">
             Loading...
