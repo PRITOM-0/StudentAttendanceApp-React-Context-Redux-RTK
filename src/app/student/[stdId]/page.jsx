@@ -1,6 +1,8 @@
-import ppImg from "../assets/pp.png";
-import { useParams } from "react-router-dom";
-import { useFetchStudentsQuery } from "../Features/StudentAttendance/StudentApi";
+"use client";
+import ppImg from "@/assets/pp.jpg";
+import Image from "next/image";
+import { useFetchStudentsQuery } from "@/features/api/studentApi";
+import { useParams } from "next/navigation";
 
 const StudentPage = () => {
   const { stdId } = useParams();
@@ -27,7 +29,12 @@ const StudentPage = () => {
 
         <div className="flex flex-col md:flex-row gap-6 items-center">
           <div className="md:w-1/2 border-2 border-indigo-300 rounded-xl overflow-hidden shadow-lg">
-            <img src={ppImg} alt="profile" className="w-full h-full object-cover" />
+            <Image
+              src={ppImg}
+              alt="Profile Picture"
+              className="w-full h-auto object-cover"
+            />
+
           </div>
 
           <div className="md:w-1/2 bg-white rounded-xl p-4 shadow-lg flex flex-col gap-3">

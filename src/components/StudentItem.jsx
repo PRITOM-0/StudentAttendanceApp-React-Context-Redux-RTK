@@ -115,7 +115,7 @@ const StudentItem = ({ std }) => {
       {showActions && (
         <div className="flex flex-wrap justify-center gap-2 mt-3">
           <Link
-            href={`/${std.id}`}
+            href={`/student/${std.id}`}
             className="px-3 py-1 rounded-full bg-indigo-500 text-white font-bold shadow hover:scale-105 transition-transform duration-300"
           >
             Details
