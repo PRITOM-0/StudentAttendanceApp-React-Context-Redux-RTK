@@ -1,10 +1,11 @@
+"use client";
 import { useState } from "react";
 import StudentItem from "./StudentItem";
 import StudentTableHead from "./StudentTableHead";
-import { useFetchStudentsQuery } from "../features/api/studentApi";
 
-const StudentList = () => {
-  const { data: students, isLoading, isError, error } = useFetchStudentsQuery();
+
+const StudentList = ({ students }) => {
+ 
   const [listMode, setListMode] = useState("All");
 
   let filteredStudents = students;
@@ -63,21 +64,6 @@ const StudentList = () => {
 
       {/* Student Items */}
       <div className="max-h-100 overflow-y-auto mt-2">
-        {isLoading && (
-          <p className="text-center text-indigo-600 font-bold text-xl">
-            Loading...
-          </p>
-        )}
-        {isError && (
-          <p className="text-center text-red-600 font-bold text-xl">
-            Error: {error}
-          </p>
-        )}
-        {!isLoading && !isError && filteredStudents?.length === 0 && (
-          <p className="text-center text-indigo-700 font-bold text-xl">
-            No students found
-          </p>
-        )}
         {filteredStudents?.map((std) => (
           <StudentItem key={std.id} std={std} />
         ))}

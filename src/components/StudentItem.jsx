@@ -1,15 +1,10 @@
+"use client";
 import { useState } from "react";
 import { classes } from "../assets/data";
 import Link from "next/link";
-import {
-  useDeleteStudentsMutation,
-  useUpdateStudentsMutation,
-} from "../features/api/studentApi";
+import { deleteStudent,updateStudent } from "@/features/studentApi";
 
 const StudentItem = ({ std }) => {
-  const [deleteStudents] = useDeleteStudentsMutation();
-  const [updateStudents] = useUpdateStudentsMutation();
-
   const [editName, setEditName] = useState(std.name);
   const [editClass, setEditClass] = useState(std.class);
   const [editMode, setEditMode] = useState(std.editMode);
@@ -23,7 +18,7 @@ const StudentItem = ({ std }) => {
   };
 
   const deleteHandle = () => {
-    deleteStudents(std.id);
+    deleteStudent(std.id);
     setShowActions(false);
     setIsSelected(false);
   };
@@ -33,7 +28,7 @@ const StudentItem = ({ std }) => {
       alert("Enter Student Information");
       return;
     }
-    updateStudents({
+    updateStudent({
       id: std.id,
       student: { ...std, name: editName, class: editClass, editMode: false },
     });
@@ -42,7 +37,7 @@ const StudentItem = ({ std }) => {
   };
 
   const updateStatus = (status) => {
-    updateStudents({ id: std.id, student: { ...std, status } });
+    updateStudent({ id: std.id, student: { ...std, status } });
     setShowActions(false);
   };
 

@@ -1,0 +1,26 @@
+{
+  "students": [
+    {
+      "name": "Pritom Saha",
+      "class": "13",
+      "status": "present",
+      "editMode": false,
+      "id": "dpeaX7jCMQ4"
+    },
+    {
+      "name": "Sagor",
+      "class": "11",
+      "status": "absent",
+      "editMode": false,
+      "id": "pbH7zmEuyRE"
+    },
+    {
+      "name": "Ajoy",
+      "class": "11",
+      "status": "present",
+      "editMode": false,
+      "id": "NNHtlbGJQbo"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

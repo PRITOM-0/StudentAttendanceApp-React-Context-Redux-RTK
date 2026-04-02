@@ -1,11 +1,12 @@
-"use client";
 import React from "react";
 import StudentList from "@/components/StudentList";
+import { getAllStudents } from "@/features/studentApi";
 
-const AllStudentPage = () => {
+const AllStudentPage = async () => {
+  const students = await getAllStudents();
   return (
     <div className="sm:w-11/12 md:w-3/4 lg:w-2/3 mx-auto mt-10 p-6 rounded-2xl bg-linear-to-r from-blue-50 via-purple-50 to-indigo-50 shadow-2xl">
-      <StudentList />
+      <StudentList students={students} />
     </div>
   );
 };

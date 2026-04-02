@@ -1,13 +1,13 @@
+"use client";
 import { useState, useEffect } from "react";
 import StudentItem from "./StudentItem";
 import StudentTableHead from "./StudentTableHead";
 import { classes } from "../assets/data";
-import { useFetchStudentsQuery } from "../features/api/studentApi";
+
 
 const demoSearch = { name: "", class: "", status: "" };
 
-const SearchStudent = () => {
-  const { data: students, isLoading, isError } = useFetchStudentsQuery();
+const SearchStudent = ({ students }) => {
   const [searchData, setSearchData] = useState(demoSearch);
   const [filteredStudents, setFilteredStudents] = useState([]);
 
@@ -39,7 +39,7 @@ const SearchStudent = () => {
   const clearHandle = () => setSearchData(demoSearch);
 
   return (
-    <div className="w-11/12 md:w-3/4 lg:w-2/3 mx-auto my-5 p-5 rounded-2xl bg-gradient-to-r from-blue-100 via-purple-100 to-indigo-100 shadow-xl">
+    <div className="w-11/12 md:w-3/4 lg:w-2/3 mx-auto my-5 p-5 rounded-2xl bg-linear-to-r from-blue-100 via-purple-100 to-indigo-100 shadow-xl">
       {/* Header */}
       <h2 className="text-2xl font-bold text-indigo-700 text-center mb-5">
         Search Students
@@ -56,7 +56,7 @@ const SearchStudent = () => {
             onChange={(e) =>
               setSearchData({ ...searchData, name: e.target.value })
             }
-            className="p-3 rounded-lg border border-2 border-indigo-500 focus:ring-2 focus:ring-purple-400 w-full md:w-64 placeholder-gray-400 text-gray-700"
+            className="p-3 rounded-lg  border-2 border-indigo-500 focus:ring-2 focus:ring-purple-400 w-full md:w-64 placeholder-gray-400 text-gray-700"
           />
 
           {/* Class */}
@@ -65,7 +65,7 @@ const SearchStudent = () => {
             onChange={(e) =>
               setSearchData({ ...searchData, class: e.target.value })
             }
-            className="p-3 rounded-lg border border-2 border-indigo-500 focus:ring-2 focus:ring-purple-400 w-full md:w-40 text-gray-500"
+            className="p-3 rounded-lg  border-2 border-indigo-500 focus:ring-2 focus:ring-purple-400 w-full md:w-40 text-gray-500"
           >
             <option value="" disabled>
               Select Class
@@ -83,7 +83,7 @@ const SearchStudent = () => {
             onChange={(e) =>
               setSearchData({ ...searchData, status: e.target.value })
             }
-            className="p-3 rounded-lg border border-2 border-indigo-500 focus:ring-2 focus:ring-purple-400 w-full md:w-40 text-gray-500 placeholder-gray-400"
+            className="p-3 rounded-lg  border-2 border-indigo-500 focus:ring-2 focus:ring-purple-400 w-full md:w-40 text-gray-500 placeholder-gray-400"
           >
             <option value="" disabled>
               Attendance
@@ -96,7 +96,7 @@ const SearchStudent = () => {
           {/* Clear Button */}
           <button
             onClick={clearHandle}
-            className="px-6 py-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-blue-500 text-white font-semibold rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105"
+            className="px-6 py-3 bg-linear-to-r from-indigo-500 via-purple-500 to-blue-500 text-white font-semibold rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105"
           >
             Clear
           </button>
@@ -107,7 +107,7 @@ const SearchStudent = () => {
       {filteredStudents.length > 0 && (
         <>
           <StudentTableHead />
-          <div className="max-h-[400px] overflow-y-auto mt-2">
+          <div className="max-h-100 overflow-y-auto mt-2">
             {filteredStudents.map((std) => (
               <StudentItem key={std.id} std={std} />
             ))}
@@ -115,22 +115,13 @@ const SearchStudent = () => {
         </>
       )}
 
-      {!isLoading && !isError && filteredStudents.length === 0 && (
+      {filteredStudents.length === 0 && (
         <p className="text-center text-indigo-700 font-bold text-xl mt-5">
           No students found
         </p>
       )}
 
-      {isLoading && (
-        <p className="text-center text-indigo-600 font-bold text-xl mt-5">
-          Loading...
-        </p>
-      )}
-      {isError && (
-        <p className="text-center text-red-600 font-bold text-xl mt-5">
-          Error loading data
-        </p>
-      )}
+      
     </div>
   );
 };

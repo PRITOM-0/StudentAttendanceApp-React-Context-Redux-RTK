@@ -1,10 +1,9 @@
-
+"use client";
 import { useState } from "react";
 import { classes } from "../assets/data";
-import { useAddStudentsMutation } from "../features/api/studentApi";
+import { addStudent } from "@/features/studentApi";
 
 const StudentForm = () => {
-  const [addStudents] = useAddStudentsMutation();
   const [inputName, setInputName] = useState("");
   const [inputClass, setInputClass] = useState("");
 
@@ -21,7 +20,7 @@ const StudentForm = () => {
       status: "none",
       editMode: false,
     };
-    addStudents(student);
+    addStudent(student);
     setInputName("");
     setInputClass("");
   };
@@ -29,7 +28,7 @@ const StudentForm = () => {
   return (
     <form
       onSubmit={submitHandle}
-      className="flex flex-col gap-4 w-full md:w-3/4 mx-auto p-5 bg-gradient-to-r from-blue-200 via-purple-200 to-indigo-200 rounded-2xl shadow-lg"
+      className="flex flex-col gap-4 w-full md:w-3/4 mx-auto p-5 bg-linear-to-r from-blue-200 via-purple-200 to-indigo-200 rounded-2xl shadow-lg"
     >
       <h2 className="text-2xl font-bold text-indigo-700 text-center mb-4">
         Add Student
